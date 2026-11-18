@@ -18,6 +18,14 @@ html[data-theme="light"] {
   --band-muted: #cfe8e3;
   --code-bg: rgba(0, 0, 0, 0.22);
   --glow: rgba(15, 118, 110, 0.28);
+  --bg-2: #e5f4f1;
+  --bg-3: #f8fbfa;
+  --wash-a: rgba(45, 212, 191, 0.34);
+  --wash-b: rgba(15, 118, 110, 0.16);
+  --blob-a: rgba(45, 212, 191, 0.42);
+  --blob-b: rgba(15, 118, 110, 0.2);
+  --blob-c: rgba(153, 246, 228, 0.55);
+  --header-offset: 76px;
 }
 
 html[data-theme="dark"] {
@@ -34,13 +42,26 @@ html[data-theme="dark"] {
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
   --header: rgba(10, 17, 19, 0.9);
   --glow: rgba(45, 212, 191, 0.2);
+  --bg-2: #0d1c1b;
+  --bg-3: #071211;
+  --wash-a: rgba(15, 118, 110, 0.45);
+  --wash-b: rgba(45, 212, 191, 0.14);
+  --blob-a: rgba(45, 212, 191, 0.18);
+  --blob-b: rgba(15, 79, 74, 0.7);
+  --blob-c: rgba(94, 234, 212, 0.14);
 }
 
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-padding-top: 84px; }
+html {
+  scroll-padding-top: 84px;
+  scroll-behavior: smooth;
+  /* The header offset is measured after load. Anchoring would keep the
+     heading under the header when that measurement changes the layout. */
+  overflow-anchor: none;
+}
 
 body {
   margin: 0;
@@ -50,6 +71,110 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   overflow-x: clip;
+}
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 520px at 0% -10%, var(--wash-a), transparent 60%),
+    radial-gradient(720px 480px at 100% 0%, var(--wash-b), transparent 55%),
+    radial-gradient(640px 420px at 70% 100%, var(--wash-a), transparent 60%),
+    linear-gradient(165deg, var(--bg-2), var(--bg) 46%, var(--bg-3));
+}
+
+.blob,
+.ring {
+  position: absolute;
+  display: block;
+}
+
+.blob {
+  border-radius: 50%;
+  filter: blur(26px);
+  animation: drift 24s ease-in-out infinite;
+}
+
+.blob-a {
+  width: min(46vw, 440px);
+  height: min(46vw, 440px);
+  background: var(--blob-a);
+  top: -12vh;
+  left: -14vw;
+}
+
+.blob-b {
+  width: min(38vw, 380px);
+  height: min(38vw, 380px);
+  background: var(--blob-b);
+  right: -16vw;
+  top: 28vh;
+  animation-duration: 30s;
+  animation-delay: -9s;
+}
+
+.blob-c {
+  width: min(30vw, 300px);
+  height: min(30vw, 300px);
+  background: var(--blob-c);
+  left: 18vw;
+  bottom: -10vh;
+  animation-duration: 26s;
+  animation-delay: -16s;
+}
+
+.ring {
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, transparent);
+  border-radius: 46% 54% 48% 52%;
+  opacity: 0.85;
+  animation: drift 34s ease-in-out infinite;
+}
+
+.ring-a {
+  width: 200px;
+  height: 200px;
+  right: -64px;
+  top: 22vh;
+  animation-duration: 38s;
+}
+
+.ring-b {
+  width: 110px;
+  height: 110px;
+  left: -36px;
+  bottom: 16vh;
+  animation-duration: 30s;
+  animation-delay: -12s;
+}
+
+@media (max-width: 700px) {
+  .ring-a {
+    width: 128px;
+    height: 128px;
+    right: -78px;
+    top: 7vh;
+  }
+  .ring-b {
+    width: 92px;
+    height: 92px;
+    left: -56px;
+    bottom: 6vh;
+  }
+}
+
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3vw, 2.5vh, 0) scale(1.06); }
 }
 
 img { max-width: 100%; height: auto; }
@@ -183,8 +308,27 @@ html[data-theme="dark"] .mark {
 .header-inner {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   min-height: 72px;
+}
+
+.header-app {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .brand { margin-right: 0; }
+  .tools { margin-left: auto; }
+  .header-app {
+    order: 3;
+    flex: 1 0 100%;
+  }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .btn { width: 100%; }
 }
 
 .brand {
@@ -225,6 +369,14 @@ html[data-theme="dark"] .mark {
   font-weight: 600;
   padding: 8px 0;
 }
+
+.nav a.menu-app,
+.nav a.menu-app:hover {
+  color: var(--on-brand);
+  text-decoration: none;
+}
+
+.short { display: none; }
 
 .nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 
@@ -301,6 +453,8 @@ html[data-theme="dark"] .mark {
   gap: 10px;
   margin: 22px 0 16px;
 }
+
+.cta-row .btn { padding-inline: 14px; }
 
 .btn {
   display: inline-flex;
@@ -676,7 +830,7 @@ dialog img { display: block; width: 100%; height: auto; }
     border-bottom: 1px solid var(--line);
   }
   html.js .nav.is-open { display: flex; }
-  html.js .nav a { padding: 12px 0; border-top: 1px solid var(--line); }
+  html.js .nav > a:not(.menu-app) { padding: 12px 0; border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 380px) {
@@ -694,9 +848,170 @@ dialog img { display: block; width: 100%; height: auto; }
 
 @media (prefers-reduced-transparency: reduce) {
   .site-header { backdrop-filter: none; background: var(--bg); }
+  .blob,
+  .ring { display: none; }
 }
 
 @media (max-width: 719px) {
   .section { padding: 52px 0; }
   .hero { padding-top: 32px; }
+}
+
+/* Smaller screens: one section fills the viewport, then the next.
+   min-height (never height) so a long section grows instead of clipping. */
+@media (max-width: 1024px) {
+  html { scroll-padding-top: 0; }
+  html,
+  body { scroll-snap-type: y proximity; }
+
+  main > section,
+  .site-footer {
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    overflow: visible;
+  }
+
+  main > section > .wrap,
+  .site-footer > .wrap { flex: 0 0 auto; }
+
+  main > section.section,
+  main > section.hero,
+  .site-footer {
+    padding-top: calc(var(--header-offset) + 20px);
+    padding-bottom: 32px;
+  }
+
+  /* Pull the hero under the in-flow header so the first screen is one section. */
+  main > section.hero { margin-top: calc(var(--header-offset) * -1); }
+
+  /* Section links still align to the viewport. Nested targets, such as
+     #subscricoes, need their own clearance under the sticky header.
+     The card is also a snap point so proximity does not skip it for the
+     next section, which starts just below it. */
+  main > section { scroll-margin-top: 0; }
+  main > section [id] {
+    scroll-margin-top: calc(var(--header-offset) + 16px);
+  }
+  #subscricoes { scroll-snap-align: start; }
+}
+
+/* Kept out of the desktop header. Shown only inside the phone menu. */
+a.menu-only,
+.seg.menu-only { display: none; }
+
+/* Phones: a quieter header, shorter hero, and carousels instead of a long stack.
+   Wider layouts keep the current arrangement. */
+@media (max-width: 480px) {
+  .brand-version,
+  .header-app,
+  .tools .seg,
+  .cta-features,
+  .pills,
+  .hero-points,
+  .showcase ul,
+  .download-list,
+  #funcionalidades .lede,
+  #ecras .lede,
+  #galeria .lede { display: none; }
+
+  html[data-lang="pt"] .long.pt,
+  html[data-lang="en"] .long.en { display: none; }
+  html[data-lang="pt"] .short.pt,
+  html[data-lang="en"] .short.en { display: inline; }
+
+  .ring { display: none; }
+  .blob { opacity: 0.35; filter: blur(40px); }
+  .blob-a { left: -32vw; top: -20vh; }
+  .blob-b { right: -34vw; }
+  .blob-c { left: -20vw; bottom: -22vh; }
+  .hero-visual::before { opacity: 0.35; }
+
+  h1 { font-size: 2.05rem; }
+  h2 { font-size: 1.65rem; margin-bottom: 18px; }
+  .intro { font-size: 1.02rem; }
+
+  main > section.section,
+  main > section.hero,
+  .site-footer {
+    padding-top: calc(var(--header-offset) + 28px);
+    padding-bottom: 40px;
+  }
+
+  .hero .cta-row { align-items: stretch; gap: 4px; margin-bottom: 8px; }
+  .hero .cta-row .btn-primary { width: 100%; }
+  .hero .btn-download {
+    width: auto;
+    align-self: center;
+    min-height: 40px;
+    margin-top: 2px;
+    padding: 0 8px;
+    background: transparent;
+    color: var(--brand-text);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .hero .btn-download:hover { background: transparent; color: var(--ink); }
+
+  a.menu-only,
+  .seg.menu-only { display: flex; }
+  html.js .nav:not(.is-open) .menu-only { display: none; }
+  .nav .menu-app {
+    width: 100%;
+    margin: 4px 0 8px;
+    border-top: 0;
+  }
+  .nav .seg.menu-only { align-self: flex-start; margin: 0 0 8px; }
+
+  .feature-grid { gap: 12px; }
+  .card { padding: 16px; }
+  .icon-tile { margin-bottom: 10px; }
+  .card h3 { margin-bottom: 6px; }
+
+  .wrap { min-width: 0; }
+  .screen-rail,
+  .gallery {
+    display: flex;
+    grid-template-columns: none;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    touch-action: pan-x pan-y;
+  }
+  main { overflow-x: clip; }
+  .screen-rail > .showcase,
+  .gallery > li {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    margin: 0;
+  }
+  .gallery > li {
+    flex-basis: 88%;
+    width: 88%;
+    max-width: 88%;
+  }
+  .showcase { gap: 12px; }
+  .frame { padding: 6px; border-radius: 16px; }
+}
+
+@media (max-width: 1024px) and (prefers-reduced-motion: reduce) {
+  html,
+  body { scroll-snap-type: none; }
 }

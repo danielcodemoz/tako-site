@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tako — finanças pessoais em meticais</title>
-<meta name="description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.2.0.">
+<meta name="description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.3.0.">
 <meta name="author" content="Daniel Marcos">
 <meta name="theme-color" content="#f4f6f7">
 <meta name="color-scheme" content="light dark">
@@ -15,7 +15,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://tako.danielpro.dev/">
 <meta property="og:title" content="Tako — finanças pessoais em meticais">
-<meta property="og:description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.2.0.">
+<meta property="og:description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.3.0.">
 <meta property="og:image" content="https://tako.danielpro.dev/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -37,10 +37,10 @@
   "name": "Tako",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Windows, Web",
-  "softwareVersion": "1.2.0",
+  "softwareVersion": "1.3.0",
   "inLanguage": ["pt", "en"],
   "url": "https://tako.danielpro.dev/",
-  "downloadUrl": "https://tako.danielpro.dev/downloads/Tako-1.2.0-x64-Setup.exe",
+  "downloadUrl": "https://tako.danielpro.dev/downloads/Tako-1.3.0-x64-Setup.exe",
   "image": "https://tako.danielpro.dev/assets/og.jpg",
   "description": "Gestor de finanças pessoais: contas, transações, orçamentos, objetivos e relatórios. Dados no dispositivo, com sincronização cifrada no Google Drive.",
   "featureList": [
@@ -56,6 +56,7 @@
     "Várias moedas",
     "Português e inglês",
     "Tema claro e escuro",
+    "Versão web no navegador",
     "PWA e aplicação Windows"
   ],
   "author": {
@@ -102,6 +103,13 @@
 </script>
 </head>
 <body>
+<div class="ambient" aria-hidden="true">
+  <span class="blob blob-a"></span>
+  <span class="blob blob-b"></span>
+  <span class="blob blob-c"></span>
+  <span class="ring ring-a"></span>
+  <span class="ring ring-b"></span>
+</div>
 <a class="skip" href="#conteudo"><span class="pt" lang="pt-MZ">Saltar para o conteúdo</span><span class="en" lang="en">Skip to content</span></a>
 <p id="status" class="sr-only" aria-live="polite"></p>
 
@@ -110,9 +118,17 @@
     <a class="brand" href="#topo">
       <img src="assets/icon-64.png" width="36" height="36" alt="">
       <span>Tako</span>
-      <span class="brand-version">1.2.0</span>
+      <span class="brand-version">1.3.0</span>
     </a>
     <nav class="nav" id="menu">
+      <a class="btn btn-primary menu-only menu-app" href="/app/">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <span class="pt" lang="pt-MZ">Entrar na plataforma</span><span class="en" lang="en">Open the web app</span>
+      </a>
+      <div class="seg menu-only" role="group" aria-label="Idioma">
+        <button type="button" data-set-lang="pt" lang="pt-MZ" aria-pressed="true">PT</button>
+        <button type="button" data-set-lang="en" lang="en" aria-pressed="false">EN</button>
+      </div>
       <a href="#funcionalidades"><span class="pt" lang="pt-MZ">Funcionalidades</span><span class="en" lang="en">Features</span></a>
       <a href="#ecras"><span class="pt" lang="pt-MZ">Ecrãs</span><span class="en" lang="en">Screens</span></a>
       <a href="#galeria"><span class="pt" lang="pt-MZ">Galeria</span><span class="en" lang="en">Gallery</span></a>
@@ -120,6 +136,10 @@
       <a href="#descarregar"><span class="pt" lang="pt-MZ">Descarregar</span><span class="en" lang="en">Download</span></a>
       <a href="#faq">FAQ</a>
     </nav>
+    <a class="btn btn-primary header-app" href="/app/">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      <span class="pt" lang="pt-MZ">Entrar na plataforma</span><span class="en" lang="en">Open the web app</span>
+    </a>
     <div class="tools">
       <div class="seg" role="group" aria-labelledby="lang-label">
         <span id="lang-label" class="sr-only"><span class="pt" lang="pt-MZ">Idioma</span><span class="en" lang="en">Language</span></span>
@@ -145,6 +165,14 @@
     </div>
   </div>
 </header>
+<script>
+/* Measure the header before the first section is laid out, so scroll-snap
+   does not park the title under a wrapped header. */
+(function () {
+  var header = document.querySelector(".site-header");
+  if (header) document.documentElement.style.setProperty("--header-offset", header.offsetHeight + "px");
+})();
+</script>
 
 <main id="conteudo" tabindex="-1">
   <section class="hero" id="topo" aria-labelledby="hero-title">
@@ -152,22 +180,27 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="pt" lang="pt-MZ">Finanças pessoais · Moçambique</span><span class="en" lang="en">Personal finance · Mozambique</span></p>
         <h1 id="hero-title">
-          <span class="pt" lang="pt-MZ">Veja para onde vai cada <span class="mark">metical</span>.</span><span class="en" lang="en">See where every <span class="mark">metical</span> goes.</span>
+          <span class="pt long" lang="pt-MZ">Veja para onde vai cada <span class="mark">metical</span>.</span><span class="pt short" lang="pt-MZ">O mês, num ecrã.</span><span class="en long" lang="en">See where every <span class="mark">metical</span> goes.</span><span class="en short" lang="en">The month, one screen.</span>
         </h1>
         <p class="intro">
-          <span class="pt" lang="pt-MZ">O Tako junta o mês num só ecrã: contas, transações, orçamentos e objetivos. Feito para quem pensa em meticais — no Windows e como PWA, em português e em inglês.</span><span class="en" lang="en">Tako puts the month on one screen: accounts, transactions, budgets and goals. Made for people who count in meticais — on Windows and as a PWA, in Portuguese and English.</span>
+          <span class="pt long" lang="pt-MZ">O Tako junta o mês num só ecrã: contas, transações, orçamentos e objetivos. Feito para quem pensa em meticais — no navegador, no Windows e como PWA, em português e em inglês.</span><span class="pt short" lang="pt-MZ">Contas, transações e orçamentos em meticais. No navegador ou no Windows.</span><span class="en long" lang="en">Tako puts the month on one screen: accounts, transactions, budgets and goals. Made for people who count in meticais — in the browser, on Windows and as a PWA, in Portuguese and English.</span><span class="en short" lang="en">Accounts, transactions and budgets in meticais. In the browser or on Windows.</span>
         </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="/downloads/Tako-1.2.0-x64-Setup.exe">
+          <a class="btn btn-primary" href="/app/">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            <span class="pt" lang="pt-MZ">Entrar na plataforma</span><span class="en" lang="en">Open the web app</span>
+          </a>
+          <a class="btn btn-primary btn-download" href="/downloads/Tako-1.3.0-x64-Setup.exe">
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="pt" lang="pt-MZ">Descarregar para Windows</span><span class="en" lang="en">Download for Windows</span>
           </a>
-          <a class="btn btn-ghost" href="#funcionalidades">
+          <a class="btn btn-ghost cta-features" href="#funcionalidades">
             <span class="pt" lang="pt-MZ">Ver funcionalidades</span><span class="en" lang="en">See features</span>
           </a>
         </div>
         <ul class="pills">
-          <li>1.2.0</li>
+          <li>1.3.0</li>
+          <li><span class="pt" lang="pt-MZ">Navegador</span><span class="en" lang="en">Browser</span></li>
           <li>Windows</li>
           <li>PWA</li>
           <li><span class="pt" lang="pt-MZ">Português e inglês</span><span class="en" lang="en">Portuguese and English</span></li>
@@ -179,7 +212,7 @@
           <li><span class="pt" lang="pt-MZ">Relatórios em CSV, PDF e Excel</span><span class="en" lang="en">Reports in CSV, PDF and Excel</span></li>
         </ul>
         <a class="soon" href="#subscricoes">
-          <span class="badge"><span class="pt" lang="pt-MZ">A caminho</span><span class="en" lang="en">On the way</span></span>
+          <span class="badge"><span class="pt" lang="pt-MZ">Novo na 1.3.0</span><span class="en" lang="en">New in 1.3.0</span></span>
           <p><span class="pt" lang="pt-MZ">Subscrições: acompanhe serviços recorrentes, converta USD para metical e veja o total do mês e do ano.</span><span class="en" lang="en">Subscriptions: track recurring services, convert USD to metical, and see the monthly and yearly totals.</span></p>
         </a>
       </div>
@@ -198,69 +231,70 @@
   <section class="section" id="funcionalidades" aria-labelledby="features-title">
     <div class="wrap">
       <p class="eyebrow"><span class="pt" lang="pt-MZ">O mês inteiro</span><span class="en" lang="en">The whole month</span></p>
-      <h2 id="features-title"><span class="pt" lang="pt-MZ">Tudo o que o mês pede, sem folha de cálculo.</span><span class="en" lang="en">Everything the month asks for, without the spreadsheet.</span></h2>
+      <h2 id="features-title"><span class="pt long" lang="pt-MZ">Tudo o que o mês pede, sem folha de cálculo.</span><span class="pt short" lang="pt-MZ">O que o Tako faz.</span><span class="en long" lang="en">Everything the month asks for, without the spreadsheet.</span><span class="en short" lang="en">What Tako does.</span></h2>
       <p class="lede"><span class="pt" lang="pt-MZ">Da chapa ao fundo de emergência. O Tako cobre o ciclo: registar, classificar, orçamentar, poupar e exportar — com os valores em MT quando é isso que usa no dia a dia.</span><span class="en" lang="en">From a minibus fare to an emergency fund. Tako covers the loop: record, classify, budget, save and export — with amounts in MT when that is the money you actually spend.</span></p>
       <ul class="feature-grid">
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="6" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Contas</span><span class="en" lang="en">Accounts</span></h3>
-          <p><span class="pt" lang="pt-MZ">Banco, carteira móvel e poupança no mesmo sítio. Crie contas, transfira entre elas e veja a parte de cada uma no património.</span><span class="en" lang="en">Bank, mobile money and savings in one place. Add accounts, transfer between them and see what each one contributes to the total.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Banco, carteira móvel e poupança no mesmo sítio. Crie contas, transfira entre elas e veja a parte de cada uma no património.</span><span class="pt short" lang="pt-MZ">Banco, carteira móvel e poupança, com transferências.</span><span class="en long" lang="en">Bank, mobile money and savings in one place. Add accounts, transfer between them and see what each one contributes to the total.</span><span class="en short" lang="en">Bank, mobile money and savings, with transfers.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 7h11M7 12h11M7 17h7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M4 7h.01M4 12h.01M4 17h.01" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Transações</span><span class="en" lang="en">Transactions</span></h3>
-          <p><span class="pt" lang="pt-MZ">Receitas, despesas e transferências, com pesquisa e filtros. Os movimentos agendados cobrem o que se repete.</span><span class="en" lang="en">Income, expenses and transfers, with search and filters. Scheduled transactions cover what repeats.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Receitas, despesas e transferências, com pesquisa e filtros. Os movimentos agendados cobrem o que se repete.</span><span class="pt short" lang="pt-MZ">Receitas, despesas, transferências e movimentos agendados.</span><span class="en long" lang="en">Income, expenses and transfers, with search and filters. Scheduled transactions cover what repeats.</span><span class="en short" lang="en">Income, expenses, transfers and scheduled entries.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 3.5V7M16 3.5V7M4 10h16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Contas a pagar</span><span class="en" lang="en">Bills to pay</span></h3>
-          <p><span class="pt" lang="pt-MZ">Renda, serviços, prestações. Separe o que ainda tem de sair, para o mês não o surpreender.</span><span class="en" lang="en">Rent, utilities, instalments. Set aside what still has to leave, so the month does not catch you out.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Renda, serviços, prestações. Separe o que ainda tem de sair, para o mês não o surpreender.</span><span class="pt short" lang="pt-MZ">Renda, serviços e prestações, à parte.</span><span class="en long" lang="en">Rent, utilities, instalments. Set aside what still has to leave, so the month does not catch you out.</span><span class="en short" lang="en">Rent, utilities and instalments, set apart.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 12.5 12 20l8-8-6.5-6.5H8L4 9v3.5z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Categorias, regras e modelos</span><span class="en" lang="en">Categories, rules and templates</span></h3>
-          <p><span class="pt" lang="pt-MZ">Organize por categoria. Regras de categorização e modelos tratam dos lançamentos que já conhece.</span><span class="en" lang="en">Sort by category. Categorisation rules and templates take care of the entries you already recognise.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Organize por categoria. Regras de categorização e modelos tratam dos lançamentos que já conhece.</span><span class="pt short" lang="pt-MZ">Categorias, regras e modelos para o que se repete.</span><span class="en long" lang="en">Sort by category. Categorisation rules and templates take care of the entries you already recognise.</span><span class="en short" lang="en">Categories, rules and templates for what repeats.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 4a8 8 0 1 0 8 8h-8V4z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M14.5 4.6A8 8 0 0 1 19.4 9.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Orçamentos</span><span class="en" lang="en">Budgets</span></h3>
-          <p><span class="pt" lang="pt-MZ">Limites semanais, mensais ou anuais. Alertas quando passa do teto, e o que sobra transita para o período seguinte.</span><span class="en" lang="en">Weekly, monthly or yearly limits. Alerts when you go past the ceiling, and whatever is left rolls into the next period.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Limites semanais, mensais ou anuais. Alertas quando passa do teto, e o que sobra transita para o período seguinte.</span><span class="pt short" lang="pt-MZ">Limites, alertas e saldo que transita.</span><span class="en long" lang="en">Weekly, monthly or yearly limits. Alerts when you go past the ceiling, and whatever is left rolls into the next period.</span><span class="en short" lang="en">Limits, alerts and rollover.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Objetivos</span><span class="en" lang="en">Goals</span></h3>
-          <p><span class="pt" lang="pt-MZ">Fundo de emergência, um portátil, uma viagem. Defina a meta em MT e contribua ao seu ritmo.</span><span class="en" lang="en">An emergency fund, a laptop, a trip. Set the target in MT and add to it at your own pace.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Fundo de emergência, um portátil, uma viagem. Defina a meta em MT e contribua ao seu ritmo.</span><span class="pt short" lang="pt-MZ">Metas em MT, ao seu ritmo.</span><span class="en long" lang="en">An emergency fund, a laptop, a trip. Set the target in MT and add to it at your own pace.</span><span class="en short" lang="en">Targets in MT, at your own pace.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 3.5h7l5 5V20a1.5 1.5 0 0 1-1.5 1.5h-10.5A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5z" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M14 3.5V9h5.5M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Relatórios</span><span class="en" lang="en">Reports</span></h3>
-          <p><span class="pt" lang="pt-MZ">O mês, o ano ou tudo. Exporte CSV, PDF e Excel, e filtre por conta antes de partilhar.</span><span class="en" lang="en">The month, the year, or everything. Export CSV, PDF and Excel, and filter by account before you share it.</span></p>
+          <p><span class="pt long" lang="pt-MZ">O mês, o ano ou tudo. Exporte CSV, PDF e Excel, e filtre por conta antes de partilhar.</span><span class="pt short" lang="pt-MZ">CSV, PDF e Excel, com filtro por conta.</span><span class="en long" lang="en">The month, the year, or everything. Export CSV, PDF and Excel, and filter by account before you share it.</span><span class="en short" lang="en">CSV, PDF and Excel, filtered by account.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><ellipse cx="12" cy="7" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">Moedas e línguas</span><span class="en" lang="en">Currencies and languages</span></h3>
-          <p><span class="pt" lang="pt-MZ">Meticais no centro, e outras moedas quando o dinheiro não vem todo na mesma unidade. A interface fala português e inglês.</span><span class="en" lang="en">Meticais at the centre, and other currencies when the money is not all in one unit. The interface speaks Portuguese and English.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Meticais no centro, e outras moedas quando o dinheiro não vem todo na mesma unidade. A interface fala português e inglês.</span><span class="pt short" lang="pt-MZ">Meticais no centro, e outras moedas.</span><span class="en long" lang="en">Meticais at the centre, and other currencies when the money is not all in one unit. The interface speaks Portuguese and English.</span><span class="en short" lang="en">Meticais at the centre, plus other currencies.</span></p>
         </li>
         <li class="card">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="4" width="12" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M7 20h7M10.5 13.5V20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><rect x="14" y="9" width="7" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg></div>
           <h3><span class="pt" lang="pt-MZ">No computador e no bolso</span><span class="en" lang="en">On the desk and in a pocket</span></h3>
-          <p><span class="pt" lang="pt-MZ">Tema claro e escuro. Aplicação de secretária para Windows e PWA. O que muda num separador acompanha os outros.</span><span class="en" lang="en">Light and dark themes. A Windows desktop app and a PWA. A change in one tab stays in step with the others.</span></p>
+          <p><span class="pt long" lang="pt-MZ">Tema claro e escuro. Aplicação de secretária para Windows e PWA. O que muda num separador acompanha os outros.</span><span class="pt short" lang="pt-MZ">Tema claro e escuro, no Windows e no navegador.</span><span class="en long" lang="en">Light and dark themes. A Windows desktop app and a PWA. A change in one tab stays in step with the others.</span><span class="en short" lang="en">Light and dark, on Windows and in the browser.</span></p>
         </li>
         <li class="card card-soon" id="subscricoes">
           <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M20 12a8 8 0 1 1-2.3-5.6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3><span class="pt" lang="pt-MZ">Subscrições, a caminho</span><span class="en" lang="en">Subscriptions, on the way</span></h3>
-          <p><span class="pt" lang="pt-MZ">Uma vista para o que é subscrito: conversão de dólar para metical e totais do mês e do ano. Ainda não faz parte da versão 1.2.0.</span><span class="en" lang="en">A view for what you subscribe to: US dollar to metical conversion, plus monthly and yearly totals. Not part of version 1.2.0 yet.</span></p>
+          <h3><span class="pt" lang="pt-MZ">Subscrições</span><span class="en" lang="en">Subscriptions</span></h3>
+          <p><span class="pt long" lang="pt-MZ">Uma vista para o que é subscrito: conversão de dólar para metical e totais do mês e do ano. Novo na versão 1.3.0.</span><span class="pt short" lang="pt-MZ">Conversão de USD para metical. Novo na 1.3.0.</span><span class="en long" lang="en">A view for what you subscribe to: US dollar to metical conversion, plus monthly and yearly totals. New in version 1.3.0.</span><span class="en short" lang="en">USD to metical. New in 1.3.0.</span></p>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="section" id="ecras" aria-labelledby="screens-title" style="padding-top: 0">
+  <section class="section" id="ecras" aria-labelledby="screens-title">
     <div class="wrap">
       <p class="eyebrow"><span class="pt" lang="pt-MZ">A aplicação</span><span class="en" lang="en">The app</span></p>
-      <h2 id="screens-title"><span class="pt" lang="pt-MZ">Ecrãs reais, com dados de exemplo.</span><span class="en" lang="en">Real screens, with sample data.</span></h2>
+      <h2 id="screens-title"><span class="pt long" lang="pt-MZ">Ecrãs reais, com dados de exemplo.</span><span class="pt short" lang="pt-MZ">Ecrãs reais.</span><span class="en long" lang="en">Real screens, with sample data.</span><span class="en short" lang="en">Real screens.</span></h2>
       <p class="lede"><span class="pt" lang="pt-MZ">Os valores que vê — chapa, Credelec, M-Pesa, Shoprite — ilustram o dia a dia. Não são um extrato de ninguém.</span><span class="en" lang="en">The figures you see — a minibus fare, electricity, mobile money, a shop — illustrate an ordinary month. They are not anyone’s real statement.</span></p>
 
+      <div class="screen-rail">
       <article class="showcase">
         <div class="copy">
           <h3><span class="pt" lang="pt-MZ">Cada lançamento no seu lugar</span><span class="en" lang="en">Every entry in its place</span></h3>
@@ -368,10 +402,11 @@
           <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema escuro, ecrã estreito</span><span class="en" lang="en">Dark theme, narrow screen</span></figcaption>
         </figure>
       </article>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="galeria" aria-labelledby="gallery-title" style="padding-top: 0">
+  <section class="section" id="galeria" aria-labelledby="gallery-title">
     <div class="wrap">
       <p class="eyebrow"><span class="pt" lang="pt-MZ">Galeria</span><span class="en" lang="en">Gallery</span></p>
       <h2 id="gallery-title"><span class="pt" lang="pt-MZ">Abra cada ecrã.</span><span class="en" lang="en">Open any screen.</span></h2>
@@ -501,18 +536,19 @@
     <div class="wrap download-grid">
       <div>
         <p class="eyebrow"><span class="pt" lang="pt-MZ">Windows · 64 bits</span><span class="en" lang="en">Windows · 64-bit</span></p>
-        <h2 id="download-title"><span class="pt" lang="pt-MZ">Instalar o Tako 1.2.0</span><span class="en" lang="en">Install Tako 1.2.0</span></h2>
+        <h2 id="download-title"><span class="pt" lang="pt-MZ">Instalar o Tako 1.3.0</span><span class="en" lang="en">Install Tako 1.3.0</span></h2>
         <p class="lede"><span class="pt" lang="pt-MZ">A aplicação de secretária para Windows, feita com Electron. Um instalador.</span><span class="en" lang="en">The Windows desktop app, built with Electron. One installer.</span></p>
-        <a class="btn btn-primary" href="/downloads/Tako-1.2.0-x64-Setup.exe">
+        <a class="btn btn-primary" href="/downloads/Tako-1.3.0-x64-Setup.exe">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="pt" lang="pt-MZ">Descarregar para Windows</span><span class="en" lang="en">Download for Windows</span>
         </a>
-        <div><code class="filename">Tako-1.2.0-x64-Setup.exe</code></div>
-        <p class="fine"><span class="pt" lang="pt-MZ">O instalador é para Windows de 64 bits. No telemóvel, ou noutro sistema, o Tako também corre como PWA no navegador. Esta página não indica um preço.</span><span class="en" lang="en">The installer is for 64-bit Windows. On a phone, or on another system, Tako also runs as a PWA in the browser. This page does not list a price.</span></p>
+        <div><code class="filename">Tako-1.3.0-x64-Setup.exe</code></div>
+        <p class="fine"><span class="pt" lang="pt-MZ">O instalador é para Windows de 64 bits. A versão 1.3.0 atualiza-se sozinha. No telemóvel, ou noutro sistema, o Tako também corre no navegador. Esta página não indica um preço.</span><span class="en" lang="en">The installer is for 64-bit Windows. Version 1.3.0 updates itself. On a phone, or on another system, Tako also runs in the browser. This page does not list a price.</span></p>
       </div>
       <div>
         <ul class="download-list">
-          <li><span class="pt" lang="pt-MZ">Versão 1.2.0</span><span class="en" lang="en">Version 1.2.0</span></li>
+          <li><span class="pt" lang="pt-MZ">Versão 1.3.0</span><span class="en" lang="en">Version 1.3.0</span></li>
+          <li><span class="pt" lang="pt-MZ">A aplicação de secretária atualiza-se sozinha</span><span class="en" lang="en">The desktop app updates itself</span></li>
           <li><span class="pt" lang="pt-MZ">Aplicação Electron para Windows de 64 bits</span><span class="en" lang="en">Electron app for 64-bit Windows</span></li>
           <li><span class="pt" lang="pt-MZ">Tema claro e escuro, português e inglês</span><span class="en" lang="en">Light and dark themes, Portuguese and English</span></li>
           <li><span class="pt" lang="pt-MZ">Dados no dispositivo, com sincronização cifrada se a ativar</span><span class="en" lang="en">Data on the device, with encrypted sync if you turn it on</span></li>
@@ -534,7 +570,7 @@
             <span class="pt" lang="pt-MZ">Onde ficam os meus dados?</span><span class="en" lang="en">Where does my data live?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Por omissão, neste dispositivo. O Tako mostra quando está só local. A sincronização com o Google Drive é opcional e cifrada — serve para ter os mesmos dados noutro computador.</span><span class="en" lang="en">On this device, by default. Tako shows when it is local only. Google Drive sync is optional and encrypted — it is there so you can keep the same data on another computer.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Por omissão, neste dispositivo — no navegador e na aplicação de secretária. O Tako mostra quando está só local. A sincronização com o Google Drive é opcional e cifrada — serve para ter os mesmos dados noutro computador ou noutro navegador.</span><span class="en" lang="en">On this device, by default — in the browser and in the desktop app. Tako shows when it is local only. Google Drive sync is optional and encrypted — it is there so you can keep the same data on another computer or in another browser.</span></p>
         </details>
         <details class="faq-item">
           <summary>
@@ -548,21 +584,21 @@
             <span class="pt" lang="pt-MZ">Posso usar o Tako no telemóvel?</span><span class="en" lang="en">Can I use Tako on a phone?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Sim, como PWA: a partir do navegador, e o ecrã adapta-se a larguras menores. O botão de descarregamento desta página é o instalador para Windows, não uma aplicação de loja móvel.</span><span class="en" lang="en">Yes, as a PWA: from the browser, and the screen adapts to a narrower width. The download button on this page is the Windows installer, not a mobile-store app.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Sim. Abra a <a href="/app/">versão web</a> no navegador: os dados ficam no dispositivo, e a sincronização com o Google Drive é opcional e cifrada. O ecrã adapta-se a larguras menores, e pode instalá-la como PWA. O botão de descarregamento desta página é o instalador para Windows, não uma aplicação de loja móvel.</span><span class="en" lang="en">Yes. Open the <a href="/app/">web app</a> in the browser: data stays on the device, and Google Drive sync is optional and encrypted. The screen adapts to a narrower width, and you can install it as a PWA. The download button on this page is the Windows installer, not a mobile-store app.</span></p>
         </details>
         <details class="faq-item">
           <summary>
-            <span class="pt" lang="pt-MZ">O que inclui a versão 1.2.0 para Windows?</span><span class="en" lang="en">What is in the Windows 1.2.0 release?</span>
+            <span class="pt" lang="pt-MZ">O que inclui a versão 1.3.0 para Windows?</span><span class="en" lang="en">What is in the Windows 1.3.0 release?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">A aplicação de secretária (Electron), num instalador de 64 bits: Tako-1.2.0-x64-Setup.exe. Contas, transações — incluindo transferências e agendadas —, categorias com regras e modelos, orçamentos com alertas e saldo que transita, objetivos, contas a pagar, relatórios em CSV, PDF e Excel, várias moedas, português e inglês, e tema claro e escuro.</span><span class="en" lang="en">The desktop app (Electron), in a 64-bit installer: Tako-1.2.0-x64-Setup.exe. Accounts, transactions — including transfers and scheduled ones — categories with rules and templates, budgets with alerts and rollover, goals, bills, CSV, PDF and Excel reports, multiple currencies, Portuguese and English, and light and dark themes.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">A aplicação de secretária (Electron), num instalador de 64 bits: Tako-1.3.0-x64-Setup.exe. A versão 1.3.0 atualiza-se sozinha. Contas, transações — incluindo transferências e agendadas —, categorias com regras e modelos, orçamentos com alertas e saldo que transita, objetivos, contas a pagar, relatórios em CSV, PDF e Excel, várias moedas, português e inglês, e tema claro e escuro.</span><span class="en" lang="en">The desktop app (Electron), in a 64-bit installer: Tako-1.3.0-x64-Setup.exe. Version 1.3.0 updates itself. Accounts, transactions — including transfers and scheduled ones — categories with rules and templates, budgets with alerts and rollover, goals, bills, CSV, PDF and Excel reports, multiple currencies, Portuguese and English, and light and dark themes.</span></p>
         </details>
         <details class="faq-item">
           <summary>
             <span class="pt" lang="pt-MZ">As subscrições já estão disponíveis?</span><span class="en" lang="en">Are subscriptions available yet?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Ainda não. Subscrições — acompanhar serviços, converter USD para metical e ver totais mensais e anuais — é uma funcionalidade a caminho. Não faz parte da versão 1.2.0.</span><span class="en" lang="en">Not yet. Subscriptions — tracking services, converting USD to metical and seeing monthly and yearly totals — are on the way. They are not part of version 1.2.0.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Sim, desde a versão 1.3.0: acompanhe serviços em tabela, cartões ou agenda, converta USD para metical e veja totais mensais e anuais. Os valores entram nas despesas, orçamentos e relatórios sem contar duas vezes.</span><span class="en" lang="en">Yes, since version 1.3.0: track services as a table, cards or agenda, convert USD to metical, and see monthly and yearly totals. Amounts flow into expenses, budgets and reports without double counting.</span></p>
         </details>
         <details class="faq-item">
           <summary>
@@ -576,7 +612,7 @@
             <span class="pt" lang="pt-MZ">Esta página tem um preço?</span><span class="en" lang="en">Does this page list a price?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Não. O Tako 1.2.0 está disponível para descarregar para Windows, e esta página não publica um preço.</span><span class="en" lang="en">No. Tako 1.2.0 is available to download for Windows, and this page does not publish a price.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Não. O Tako 1.3.0 está disponível para descarregar para Windows, e esta página não publica um preço.</span><span class="en" lang="en">No. Tako 1.3.0 is available to download for Windows, and this page does not publish a price.</span></p>
         </details>
       </div>
     </div>
