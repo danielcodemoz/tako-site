@@ -131,16 +131,44 @@
     return imgs[0];
   }
 
+  var shotIndex = 0;
+  var lockedScroll = 0;
+
+  function shotButtons() {
+    return Array.prototype.slice.call(document.querySelectorAll(".shot-btn"));
+  }
+
+  function showShot(index) {
+    var buttons = shotButtons();
+    if (!buttons.length) return;
+    shotIndex = (index + buttons.length) % buttons.length;
+    var btn = buttons[shotIndex];
+    var img = visibleImg(btn);
+    var figure = btn.closest("figure");
+    var caption = figure ? figure.querySelector("figcaption") : null;
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.alt = img.alt;
+    lightboxImg.lang = img.lang || root.lang;
+    lightboxTitle.textContent = caption ? caption.innerText : img.alt;
+  }
+
+  function lockPage() {
+    lockedScroll = window.scrollY;
+    root.classList.add("lightbox-open");
+    document.body.style.top = -lockedScroll + "px";
+  }
+
+  function unlockPage() {
+    root.classList.remove("lightbox-open");
+    document.body.style.top = "";
+    window.scrollTo(0, lockedScroll);
+  }
+
   document.querySelectorAll(".shot-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var img = visibleImg(btn);
-      var figure = btn.closest("figure");
-      var caption = figure ? figure.querySelector("figcaption") : null;
       lastFocus = btn;
-      lightboxImg.src = img.currentSrc || img.src;
-      lightboxImg.alt = img.alt;
-      lightboxImg.lang = img.lang || root.lang;
-      lightboxTitle.textContent = caption ? caption.innerText : img.alt;
+      showShot(shotButtons().indexOf(btn));
+      lockPage();
       lightbox.showModal();
       document.getElementById("lightbox-close").focus();
     });
@@ -150,14 +178,44 @@
     lightbox.close();
   });
 
+  document.getElementById("lightbox-prev").addEventListener("click", function () {
+    showShot(shotIndex - 1);
+  });
+
+  document.getElementById("lightbox-next").addEventListener("click", function () {
+    showShot(shotIndex + 1);
+  });
+
   lightbox.addEventListener("click", function (event) {
-    var rect = lightbox.getBoundingClientRect();
-    var inside = rect.top <= event.clientY && event.clientY <= rect.bottom &&
-      rect.left <= event.clientX && event.clientX <= rect.right;
-    if (!inside) lightbox.close();
+    if (event.target === lightbox) lightbox.close();
+  });
+
+  var swipeX = null;
+  lightbox.addEventListener("touchstart", function (event) {
+    if (event.touches.length === 1) swipeX = event.touches[0].clientX;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", function (event) {
+    if (swipeX == null) return;
+    var dx = event.changedTouches[0].clientX - swipeX;
+    swipeX = null;
+    if (Math.abs(dx) < 48) return;
+    showShot(shotIndex + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  document.addEventListener("keydown", function (event) {
+    if (!lightbox.open) return;
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showShot(shotIndex - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showShot(shotIndex + 1);
+    }
   });
 
   lightbox.addEventListener("close", function () {
+    unlockPage();
     if (lastFocus) lastFocus.focus();
   });
 
@@ -185,4 +243,87 @@
 
   syncAlts();
   syncControls();
+
+  (function cycleCurrency() {
+    var words = {
+      pt: ["metical", "dólar", "rand", "euro", "real", "libra", "kwanza"],
+      en: ["metical", "dollar", "rand", "euro", "real", "pound", "kwanza"]
+    };
+    var slots = [
+      { word: document.querySelector(".pt.long .fx .word"), list: words.pt },
+      { word: document.querySelector(".en.long .fx .word"), list: words.en }
+    ].filter(function (slot) { return slot.word; });
+    if (!slots.length) return;
+
+    slots.forEach(function (slot) {
+      slot.mark = slot.word.closest(".mark");
+      slot.index = 0;
+    });
+
+    var motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function measure(slot, text) {
+      var probe = slot.word.cloneNode(false);
+      probe.textContent = text;
+      probe.className = "word";
+      probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;";
+      slot.mark.appendChild(probe);
+      var width = Math.ceil(probe.getBoundingClientRect().width);
+      probe.remove();
+      return width;
+    }
+
+    function fit(slot) {
+      if (slot.mark.offsetParent === null && slot.mark.getClientRects().length === 0) return;
+      slot.mark.style.width = measure(slot, slot.list[slot.index]) + "px";
+    }
+
+    function showStatic() {
+      slots.forEach(function (slot) {
+        slot.index = 0;
+        slot.word.textContent = slot.list[0];
+        slot.word.classList.remove("is-out", "is-in");
+        slot.mark.style.width = "";
+      });
+    }
+
+    if (motion.matches) {
+      showStatic();
+      return;
+    }
+
+    slots.forEach(fit);
+
+    function step() {
+      if (motion.matches) return;
+      slots.forEach(function (slot) { slot.word.classList.add("is-out"); });
+      window.setTimeout(function () {
+        slots.forEach(function (slot) {
+          slot.index = (slot.index + 1) % slot.list.length;
+          slot.word.textContent = slot.list[slot.index];
+          slot.word.classList.remove("is-out");
+          slot.word.classList.add("is-in");
+          fit(slot);
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { slot.word.classList.remove("is-in"); });
+          });
+        });
+      }, 180);
+    }
+
+    var timer = window.setInterval(step, 1600);
+    window.addEventListener("resize", function () { slots.forEach(fit); });
+    if (motion.addEventListener) {
+      motion.addEventListener("change", function () {
+        if (motion.matches) {
+          window.clearInterval(timer);
+          showStatic();
+        }
+      });
+    }
+
+    new MutationObserver(function () {
+      slots.forEach(fit);
+    }).observe(root, { attributes: true, attributeFilter: ["data-lang"] });
+  })();
 })();
