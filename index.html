@@ -56,6 +56,7 @@
     "Várias moedas",
     "Português e inglês",
     "Tema claro e escuro",
+    "Versão web no navegador",
     "PWA e aplicação Windows"
   ],
   "author": {
@@ -127,6 +128,10 @@
       <a href="#descarregar"><span class="pt" lang="pt-MZ">Descarregar</span><span class="en" lang="en">Download</span></a>
       <a href="#faq">FAQ</a>
     </nav>
+    <a class="btn btn-primary header-app" href="/app/">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      <span class="pt" lang="pt-MZ">Entrar na plataforma</span><span class="en" lang="en">Open the web app</span>
+    </a>
     <div class="tools">
       <div class="seg" role="group" aria-labelledby="lang-label">
         <span id="lang-label" class="sr-only"><span class="pt" lang="pt-MZ">Idioma</span><span class="en" lang="en">Language</span></span>
@@ -152,6 +157,14 @@
     </div>
   </div>
 </header>
+<script>
+/* Measure the header before the first section is laid out, so scroll-snap
+   does not park the title under a wrapped header. */
+(function () {
+  var header = document.querySelector(".site-header");
+  if (header) document.documentElement.style.setProperty("--header-offset", header.offsetHeight + "px");
+})();
+</script>
 
 <main id="conteudo" tabindex="-1">
   <section class="hero" id="topo" aria-labelledby="hero-title">
@@ -162,9 +175,13 @@
           <span class="pt" lang="pt-MZ">Veja para onde vai cada <span class="mark">metical</span>.</span><span class="en" lang="en">See where every <span class="mark">metical</span> goes.</span>
         </h1>
         <p class="intro">
-          <span class="pt" lang="pt-MZ">O Tako junta o mês num só ecrã: contas, transações, orçamentos e objetivos. Feito para quem pensa em meticais — no Windows e como PWA, em português e em inglês.</span><span class="en" lang="en">Tako puts the month on one screen: accounts, transactions, budgets and goals. Made for people who count in meticais — on Windows and as a PWA, in Portuguese and English.</span>
+          <span class="pt" lang="pt-MZ">O Tako junta o mês num só ecrã: contas, transações, orçamentos e objetivos. Feito para quem pensa em meticais — no navegador, no Windows e como PWA, em português e em inglês.</span><span class="en" lang="en">Tako puts the month on one screen: accounts, transactions, budgets and goals. Made for people who count in meticais — in the browser, on Windows and as a PWA, in Portuguese and English.</span>
         </p>
         <div class="cta-row">
+          <a class="btn btn-primary" href="/app/">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 20h8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            <span class="pt" lang="pt-MZ">Entrar na plataforma</span><span class="en" lang="en">Open the web app</span>
+          </a>
           <a class="btn btn-primary" href="/downloads/Tako-1.2.0-x64-Setup.exe">
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="pt" lang="pt-MZ">Descarregar para Windows</span><span class="en" lang="en">Download for Windows</span>
@@ -175,6 +192,7 @@
         </div>
         <ul class="pills">
           <li>1.2.0</li>
+          <li><span class="pt" lang="pt-MZ">Navegador</span><span class="en" lang="en">Browser</span></li>
           <li>Windows</li>
           <li>PWA</li>
           <li><span class="pt" lang="pt-MZ">Português e inglês</span><span class="en" lang="en">Portuguese and English</span></li>
@@ -541,7 +559,7 @@
             <span class="pt" lang="pt-MZ">Onde ficam os meus dados?</span><span class="en" lang="en">Where does my data live?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Por omissão, neste dispositivo. O Tako mostra quando está só local. A sincronização com o Google Drive é opcional e cifrada — serve para ter os mesmos dados noutro computador.</span><span class="en" lang="en">On this device, by default. Tako shows when it is local only. Google Drive sync is optional and encrypted — it is there so you can keep the same data on another computer.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Por omissão, neste dispositivo — no navegador e na aplicação de secretária. O Tako mostra quando está só local. A sincronização com o Google Drive é opcional e cifrada — serve para ter os mesmos dados noutro computador ou noutro navegador.</span><span class="en" lang="en">On this device, by default — in the browser and in the desktop app. Tako shows when it is local only. Google Drive sync is optional and encrypted — it is there so you can keep the same data on another computer or in another browser.</span></p>
         </details>
         <details class="faq-item">
           <summary>
@@ -555,7 +573,7 @@
             <span class="pt" lang="pt-MZ">Posso usar o Tako no telemóvel?</span><span class="en" lang="en">Can I use Tako on a phone?</span>
             <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
           </summary>
-          <p class="answer"><span class="pt" lang="pt-MZ">Sim, como PWA: a partir do navegador, e o ecrã adapta-se a larguras menores. O botão de descarregamento desta página é o instalador para Windows, não uma aplicação de loja móvel.</span><span class="en" lang="en">Yes, as a PWA: from the browser, and the screen adapts to a narrower width. The download button on this page is the Windows installer, not a mobile-store app.</span></p>
+          <p class="answer"><span class="pt" lang="pt-MZ">Sim. Abra a <a href="/app/">versão web</a> no navegador: os dados ficam no dispositivo, e a sincronização com o Google Drive é opcional e cifrada. O ecrã adapta-se a larguras menores, e pode instalá-la como PWA. O botão de descarregamento desta página é o instalador para Windows, não uma aplicação de loja móvel.</span><span class="en" lang="en">Yes. Open the <a href="/app/">web app</a> in the browser: data stays on the device, and Google Drive sync is optional and encrypted. The screen adapts to a narrower width, and you can install it as a PWA. The download button on this page is the Windows installer, not a mobile-store app.</span></p>
         </details>
         <details class="faq-item">
           <summary>

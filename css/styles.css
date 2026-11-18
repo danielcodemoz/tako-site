@@ -58,6 +58,9 @@ html[data-theme="dark"] {
 html {
   scroll-padding-top: 84px;
   scroll-behavior: smooth;
+  /* The header offset is measured after load. Anchoring would keep the
+     heading under the header when that measurement changes the layout. */
+  overflow-anchor: none;
 }
 
 body {
@@ -305,8 +308,27 @@ html[data-theme="dark"] .mark {
 .header-inner {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   min-height: 72px;
+}
+
+.header-app {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .brand { margin-right: 0; }
+  .tools { margin-left: auto; }
+  .header-app {
+    order: 3;
+    flex: 1 0 100%;
+  }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .btn { width: 100%; }
 }
 
 .brand {
@@ -423,6 +445,8 @@ html[data-theme="dark"] .mark {
   gap: 10px;
   margin: 22px 0 16px;
 }
+
+.cta-row .btn { padding-inline: 14px; }
 
 .btn {
   display: inline-flex;

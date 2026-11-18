@@ -172,14 +172,16 @@
     });
   }
 
-  function syncHeaderOffset() {
+  function syncHeaderOffset(reset) {
     var header = document.querySelector(".site-header");
     if (!header) return;
+    var y = window.scrollY;
     root.style.setProperty("--header-offset", header.offsetHeight + "px");
+    if (reset && !location.hash && y > 0 && y <= header.offsetHeight) window.scrollTo(0, 0);
   }
 
-  syncHeaderOffset();
-  window.addEventListener("resize", syncHeaderOffset);
+  syncHeaderOffset(true);
+  window.addEventListener("resize", function () { syncHeaderOffset(false); });
 
   syncAlts();
   syncControls();
