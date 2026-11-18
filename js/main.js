@@ -172,6 +172,15 @@
     });
   }
 
+  function syncHeaderOffset() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    root.style.setProperty("--header-offset", header.offsetHeight + "px");
+  }
+
+  syncHeaderOffset();
+  window.addEventListener("resize", syncHeaderOffset);
+
   syncAlts();
   syncControls();
 })();

@@ -18,6 +18,14 @@ html[data-theme="light"] {
   --band-muted: #cfe8e3;
   --code-bg: rgba(0, 0, 0, 0.22);
   --glow: rgba(15, 118, 110, 0.28);
+  --bg-2: #e5f4f1;
+  --bg-3: #f8fbfa;
+  --wash-a: rgba(45, 212, 191, 0.34);
+  --wash-b: rgba(15, 118, 110, 0.16);
+  --blob-a: rgba(45, 212, 191, 0.42);
+  --blob-b: rgba(15, 118, 110, 0.2);
+  --blob-c: rgba(153, 246, 228, 0.55);
+  --header-offset: 76px;
 }
 
 html[data-theme="dark"] {
@@ -34,13 +42,23 @@ html[data-theme="dark"] {
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
   --header: rgba(10, 17, 19, 0.9);
   --glow: rgba(45, 212, 191, 0.2);
+  --bg-2: #0d1c1b;
+  --bg-3: #071211;
+  --wash-a: rgba(15, 118, 110, 0.45);
+  --wash-b: rgba(45, 212, 191, 0.14);
+  --blob-a: rgba(45, 212, 191, 0.18);
+  --blob-b: rgba(15, 79, 74, 0.7);
+  --blob-c: rgba(94, 234, 212, 0.14);
 }
 
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-padding-top: 84px; }
+html {
+  scroll-padding-top: 84px;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -50,6 +68,110 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   overflow-x: clip;
+}
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 520px at 0% -10%, var(--wash-a), transparent 60%),
+    radial-gradient(720px 480px at 100% 0%, var(--wash-b), transparent 55%),
+    radial-gradient(640px 420px at 70% 100%, var(--wash-a), transparent 60%),
+    linear-gradient(165deg, var(--bg-2), var(--bg) 46%, var(--bg-3));
+}
+
+.blob,
+.ring {
+  position: absolute;
+  display: block;
+}
+
+.blob {
+  border-radius: 50%;
+  filter: blur(26px);
+  animation: drift 24s ease-in-out infinite;
+}
+
+.blob-a {
+  width: min(46vw, 440px);
+  height: min(46vw, 440px);
+  background: var(--blob-a);
+  top: -12vh;
+  left: -14vw;
+}
+
+.blob-b {
+  width: min(38vw, 380px);
+  height: min(38vw, 380px);
+  background: var(--blob-b);
+  right: -16vw;
+  top: 28vh;
+  animation-duration: 30s;
+  animation-delay: -9s;
+}
+
+.blob-c {
+  width: min(30vw, 300px);
+  height: min(30vw, 300px);
+  background: var(--blob-c);
+  left: 18vw;
+  bottom: -10vh;
+  animation-duration: 26s;
+  animation-delay: -16s;
+}
+
+.ring {
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, transparent);
+  border-radius: 46% 54% 48% 52%;
+  opacity: 0.85;
+  animation: drift 34s ease-in-out infinite;
+}
+
+.ring-a {
+  width: 200px;
+  height: 200px;
+  right: -64px;
+  top: 22vh;
+  animation-duration: 38s;
+}
+
+.ring-b {
+  width: 110px;
+  height: 110px;
+  left: -36px;
+  bottom: 16vh;
+  animation-duration: 30s;
+  animation-delay: -12s;
+}
+
+@media (max-width: 700px) {
+  .ring-a {
+    width: 128px;
+    height: 128px;
+    right: -78px;
+    top: 7vh;
+  }
+  .ring-b {
+    width: 92px;
+    height: 92px;
+    left: -56px;
+    bottom: 6vh;
+  }
+}
+
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3vw, 2.5vh, 0) scale(1.06); }
 }
 
 img { max-width: 100%; height: auto; }
@@ -694,9 +816,49 @@ dialog img { display: block; width: 100%; height: auto; }
 
 @media (prefers-reduced-transparency: reduce) {
   .site-header { backdrop-filter: none; background: var(--bg); }
+  .blob,
+  .ring { display: none; }
 }
 
 @media (max-width: 719px) {
   .section { padding: 52px 0; }
   .hero { padding-top: 32px; }
+}
+
+/* Smaller screens: one section fills the viewport, then the next.
+   min-height (never height) so a long section grows instead of clipping. */
+@media (max-width: 1024px) {
+  html { scroll-padding-top: 0; }
+  html,
+  body { scroll-snap-type: y proximity; }
+
+  main > section,
+  .site-footer {
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    overflow: visible;
+  }
+
+  main > section > .wrap,
+  .site-footer > .wrap { flex: 0 0 auto; }
+
+  main > section.section,
+  main > section.hero,
+  .site-footer {
+    padding-top: calc(var(--header-offset) + 20px);
+    padding-bottom: 32px;
+  }
+
+  /* Pull the hero under the in-flow header so the first screen is one section. */
+  main > section.hero { margin-top: calc(var(--header-offset) * -1); }
+}
+
+@media (max-width: 1024px) and (prefers-reduced-motion: reduce) {
+  html,
+  body { scroll-snap-type: none; }
 }
