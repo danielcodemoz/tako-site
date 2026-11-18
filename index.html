@@ -1,10 +1,611 @@
 <!doctype html>
-<html lang="pt-MZ">
+<html lang="pt-MZ" data-theme="light" data-lang="pt">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Em breve</title>
-<style>body{font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#0f172a;color:#e2e8f0}main{text-align:center;padding:2rem}</style>
+<title>Tako — finanças pessoais em meticais</title>
+<meta name="description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.2.0.">
+<meta name="author" content="Daniel Marcos">
+<meta name="theme-color" content="#f4f6f7">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://tako.danielpro.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tako">
+<meta property="og:locale" content="pt_MZ">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://tako.danielpro.dev/">
+<meta property="og:title" content="Tako — finanças pessoais em meticais">
+<meta property="og:description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive. Windows 1.2.0.">
+<meta property="og:image" content="https://tako.danielpro.dev/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tako, finanças pessoais em meticais, com o painel da aplicação.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tako — finanças pessoais em meticais">
+<meta name="twitter:description" content="Contas, transações, orçamentos e objetivos em meticais. Dados no seu dispositivo, com sincronização cifrada no Google Drive.">
+<meta name="twitter:image" content="https://tako.danielpro.dev/assets/og.jpg">
+<meta name="twitter:image:alt" content="Tako, finanças pessoais em meticais, com o painel da aplicação.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tako",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Windows, Web",
+  "softwareVersion": "1.2.0",
+  "inLanguage": ["pt", "en"],
+  "url": "https://tako.danielpro.dev/",
+  "downloadUrl": "https://tako.danielpro.dev/downloads/Tako-1.2.0-x64-Setup.exe",
+  "image": "https://tako.danielpro.dev/assets/og.jpg",
+  "description": "Gestor de finanças pessoais: contas, transações, orçamentos, objetivos e relatórios. Dados no dispositivo, com sincronização cifrada no Google Drive.",
+  "featureList": [
+    "Contas e transferências",
+    "Transações e movimentos agendados",
+    "Categorias, regras e modelos",
+    "Orçamentos com alertas e saldo que transita",
+    "Objetivos de poupança",
+    "Contas a pagar",
+    "Relatórios CSV, PDF e Excel",
+    "Sincronização cifrada com o Google Drive",
+    "Sincronização entre separadores",
+    "Várias moedas",
+    "Português e inglês",
+    "Tema claro e escuro",
+    "PWA e aplicação Windows"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Daniel Marcos",
+    "url": "https://danielpro.dev"
+  }
+}
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add("js");
+  var theme = null;
+  var lang = null;
+  try {
+    var q = new URLSearchParams(location.search);
+    var qTheme = q.get("theme");
+    var qLang = q.get("lang");
+    if (qTheme === "light" || qTheme === "dark") {
+      theme = qTheme;
+      localStorage.setItem("tako-theme", theme);
+    } else {
+      theme = localStorage.getItem("tako-theme");
+    }
+    if (qLang === "en" || qLang === "pt") {
+      lang = qLang;
+      localStorage.setItem("tako-lang", lang);
+    } else {
+      lang = localStorage.getItem("tako-lang");
+    }
+  } catch (e) {}
+  if (theme !== "light" && theme !== "dark") {
+    theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  if (lang !== "en" && lang !== "pt") lang = "pt";
+  root.setAttribute("data-theme", theme);
+  root.setAttribute("data-lang", lang);
+  root.lang = lang === "en" ? "en" : "pt-MZ";
+  if (lang === "en") document.title = "Tako — personal finance in meticais";
+  var tc = document.querySelector('meta[name="theme-color"]');
+  if (tc) tc.setAttribute("content", theme === "dark" ? "#0a1113" : "#f4f6f7");
+})();
+</script>
 </head>
-<body><main><h1>Em breve</h1><p>Site em construção — Danielpro.</p></main></body>
+<body>
+<a class="skip" href="#conteudo"><span class="pt" lang="pt-MZ">Saltar para o conteúdo</span><span class="en" lang="en">Skip to content</span></a>
+<p id="status" class="sr-only" aria-live="polite"></p>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#topo">
+      <img src="assets/icon-64.png" width="36" height="36" alt="">
+      <span>Tako</span>
+      <span class="brand-version">1.2.0</span>
+    </a>
+    <nav class="nav" id="menu">
+      <a href="#funcionalidades"><span class="pt" lang="pt-MZ">Funcionalidades</span><span class="en" lang="en">Features</span></a>
+      <a href="#ecras"><span class="pt" lang="pt-MZ">Ecrãs</span><span class="en" lang="en">Screens</span></a>
+      <a href="#galeria"><span class="pt" lang="pt-MZ">Galeria</span><span class="en" lang="en">Gallery</span></a>
+      <a href="#privacidade"><span class="pt" lang="pt-MZ">Privacidade</span><span class="en" lang="en">Privacy</span></a>
+      <a href="#descarregar"><span class="pt" lang="pt-MZ">Descarregar</span><span class="en" lang="en">Download</span></a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="tools">
+      <div class="seg" role="group" aria-labelledby="lang-label">
+        <span id="lang-label" class="sr-only"><span class="pt" lang="pt-MZ">Idioma</span><span class="en" lang="en">Language</span></span>
+        <button type="button" data-set-lang="pt" lang="pt-MZ" aria-pressed="true">PT</button>
+        <button type="button" data-set-lang="en" lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn" id="theme-btn">
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M16 3.2A8.2 8.2 0 1 0 20.8 14 6.4 6.4 0 0 1 16 3.2z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <span class="sr-only">
+          <span class="only-light"><span class="pt" lang="pt-MZ">Ativar tema escuro</span><span class="en" lang="en">Switch to dark theme</span></span>
+          <span class="only-dark"><span class="pt" lang="pt-MZ">Ativar tema claro</span><span class="en" lang="en">Switch to light theme</span></span>
+        </span>
+      </button>
+      <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu">
+        <svg class="when-closed" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <svg class="when-open" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <span class="sr-only">
+          <span class="when-closed"><span class="pt" lang="pt-MZ">Abrir menu</span><span class="en" lang="en">Open menu</span></span>
+          <span class="when-open"><span class="pt" lang="pt-MZ">Fechar menu</span><span class="en" lang="en">Close menu</span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo" tabindex="-1">
+  <section class="hero" id="topo" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pt" lang="pt-MZ">Finanças pessoais · Moçambique</span><span class="en" lang="en">Personal finance · Mozambique</span></p>
+        <h1 id="hero-title">
+          <span class="pt" lang="pt-MZ">Veja para onde vai cada <span class="mark">metical</span>.</span><span class="en" lang="en">See where every <span class="mark">metical</span> goes.</span>
+        </h1>
+        <p class="intro">
+          <span class="pt" lang="pt-MZ">O Tako junta o mês num só ecrã: contas, transações, orçamentos e objetivos. Feito para quem pensa em meticais — no Windows e como PWA, em português e em inglês.</span><span class="en" lang="en">Tako puts the month on one screen: accounts, transactions, budgets and goals. Made for people who count in meticais — on Windows and as a PWA, in Portuguese and English.</span>
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/downloads/Tako-1.2.0-x64-Setup.exe">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="pt" lang="pt-MZ">Descarregar para Windows</span><span class="en" lang="en">Download for Windows</span>
+          </a>
+          <a class="btn btn-ghost" href="#funcionalidades">
+            <span class="pt" lang="pt-MZ">Ver funcionalidades</span><span class="en" lang="en">See features</span>
+          </a>
+        </div>
+        <ul class="pills">
+          <li>1.2.0</li>
+          <li>Windows</li>
+          <li>PWA</li>
+          <li><span class="pt" lang="pt-MZ">Português e inglês</span><span class="en" lang="en">Portuguese and English</span></li>
+          <li><span class="pt" lang="pt-MZ">Dados locais</span><span class="en" lang="en">Local data</span></li>
+        </ul>
+        <ul class="hero-points">
+          <li><span class="pt" lang="pt-MZ">Contas, transferências e movimentos agendados</span><span class="en" lang="en">Accounts, transfers and scheduled transactions</span></li>
+          <li><span class="pt" lang="pt-MZ">Orçamentos com alertas e objetivos de poupança</span><span class="en" lang="en">Budgets with alerts, and savings goals</span></li>
+          <li><span class="pt" lang="pt-MZ">Relatórios em CSV, PDF e Excel</span><span class="en" lang="en">Reports in CSV, PDF and Excel</span></li>
+        </ul>
+        <a class="soon" href="#subscricoes">
+          <span class="badge"><span class="pt" lang="pt-MZ">A caminho</span><span class="en" lang="en">On the way</span></span>
+          <p><span class="pt" lang="pt-MZ">Subscrições: acompanhe serviços recorrentes, converta USD para metical e veja o total do mês e do ano.</span><span class="en" lang="en">Subscriptions: track recurring services, convert USD to metical, and see the monthly and yearly totals.</span></p>
+        </a>
+      </div>
+      <figure class="hero-visual">
+        <div class="frame">
+          <img class="for-light" src="assets/shots/dashboard-light.webp" width="1280" height="800" alt="Painel do Tako em tema claro: saldo total em MZN, entradas, saídas, taxa de poupança, categorias e objetivos. Dados de exemplo." data-alt-pt="Painel do Tako em tema claro: saldo total em MZN, entradas, saídas, taxa de poupança, categorias e objetivos. Dados de exemplo." data-alt-en="Tako dashboard in the light theme: total balance in MZN, money in, money out, savings rate, categories and goals. Sample data." fetchpriority="high" decoding="async">
+          <img class="for-dark" src="assets/shots/dashboard-dark.webp" width="1280" height="800" alt="Painel do Tako em tema escuro: saldo total em MZN, entradas, saídas, taxa de poupança, categorias e objetivos. Dados de exemplo." data-alt-pt="Painel do Tako em tema escuro: saldo total em MZN, entradas, saídas, taxa de poupança, categorias e objetivos. Dados de exemplo." data-alt-en="Tako dashboard in the dark theme: total balance in MZN, money in, money out, savings rate, categories and goals. Sample data." fetchpriority="high" decoding="async">
+        </div>
+        <figcaption>
+          <span class="pt" lang="pt-MZ">Painel de exemplo. O tema do ecrã acompanha o desta página.</span><span class="en" lang="en">Sample dashboard. Its theme follows this page.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="funcionalidades" aria-labelledby="features-title">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pt" lang="pt-MZ">O mês inteiro</span><span class="en" lang="en">The whole month</span></p>
+      <h2 id="features-title"><span class="pt" lang="pt-MZ">Tudo o que o mês pede, sem folha de cálculo.</span><span class="en" lang="en">Everything the month asks for, without the spreadsheet.</span></h2>
+      <p class="lede"><span class="pt" lang="pt-MZ">Da chapa ao fundo de emergência. O Tako cobre o ciclo: registar, classificar, orçamentar, poupar e exportar — com os valores em MT quando é isso que usa no dia a dia.</span><span class="en" lang="en">From a minibus fare to an emergency fund. Tako covers the loop: record, classify, budget, save and export — with amounts in MT when that is the money you actually spend.</span></p>
+      <ul class="feature-grid">
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="6" width="18" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Contas</span><span class="en" lang="en">Accounts</span></h3>
+          <p><span class="pt" lang="pt-MZ">Banco, carteira móvel e poupança no mesmo sítio. Crie contas, transfira entre elas e veja a parte de cada uma no património.</span><span class="en" lang="en">Bank, mobile money and savings in one place. Add accounts, transfer between them and see what each one contributes to the total.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 7h11M7 12h11M7 17h7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M4 7h.01M4 12h.01M4 17h.01" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Transações</span><span class="en" lang="en">Transactions</span></h3>
+          <p><span class="pt" lang="pt-MZ">Receitas, despesas e transferências, com pesquisa e filtros. Os movimentos agendados cobrem o que se repete.</span><span class="en" lang="en">Income, expenses and transfers, with search and filters. Scheduled transactions cover what repeats.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 3.5V7M16 3.5V7M4 10h16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Contas a pagar</span><span class="en" lang="en">Bills to pay</span></h3>
+          <p><span class="pt" lang="pt-MZ">Renda, serviços, prestações. Separe o que ainda tem de sair, para o mês não o surpreender.</span><span class="en" lang="en">Rent, utilities, instalments. Set aside what still has to leave, so the month does not catch you out.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 12.5 12 20l8-8-6.5-6.5H8L4 9v3.5z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Categorias, regras e modelos</span><span class="en" lang="en">Categories, rules and templates</span></h3>
+          <p><span class="pt" lang="pt-MZ">Organize por categoria. Regras de categorização e modelos tratam dos lançamentos que já conhece.</span><span class="en" lang="en">Sort by category. Categorisation rules and templates take care of the entries you already recognise.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 4a8 8 0 1 0 8 8h-8V4z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M14.5 4.6A8 8 0 0 1 19.4 9.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Orçamentos</span><span class="en" lang="en">Budgets</span></h3>
+          <p><span class="pt" lang="pt-MZ">Limites semanais, mensais ou anuais. Alertas quando passa do teto, e o que sobra transita para o período seguinte.</span><span class="en" lang="en">Weekly, monthly or yearly limits. Alerts when you go past the ceiling, and whatever is left rolls into the next period.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.75"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Objetivos</span><span class="en" lang="en">Goals</span></h3>
+          <p><span class="pt" lang="pt-MZ">Fundo de emergência, um portátil, uma viagem. Defina a meta em MT e contribua ao seu ritmo.</span><span class="en" lang="en">An emergency fund, a laptop, a trip. Set the target in MT and add to it at your own pace.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 3.5h7l5 5V20a1.5 1.5 0 0 1-1.5 1.5h-10.5A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5z" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M14 3.5V9h5.5M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Relatórios</span><span class="en" lang="en">Reports</span></h3>
+          <p><span class="pt" lang="pt-MZ">O mês, o ano ou tudo. Exporte CSV, PDF e Excel, e filtre por conta antes de partilhar.</span><span class="en" lang="en">The month, the year, or everything. Export CSV, PDF and Excel, and filter by account before you share it.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><ellipse cx="12" cy="7" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Moedas e línguas</span><span class="en" lang="en">Currencies and languages</span></h3>
+          <p><span class="pt" lang="pt-MZ">Meticais no centro, e outras moedas quando o dinheiro não vem todo na mesma unidade. A interface fala português e inglês.</span><span class="en" lang="en">Meticais at the centre, and other currencies when the money is not all in one unit. The interface speaks Portuguese and English.</span></p>
+        </li>
+        <li class="card">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="4" width="12" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M7 20h7M10.5 13.5V20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><rect x="14" y="9" width="7" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">No computador e no bolso</span><span class="en" lang="en">On the desk and in a pocket</span></h3>
+          <p><span class="pt" lang="pt-MZ">Tema claro e escuro. Aplicação de secretária para Windows e PWA. O que muda num separador acompanha os outros.</span><span class="en" lang="en">Light and dark themes. A Windows desktop app and a PWA. A change in one tab stays in step with the others.</span></p>
+        </li>
+        <li class="card card-soon" id="subscricoes">
+          <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M20 12a8 8 0 1 1-2.3-5.6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3><span class="pt" lang="pt-MZ">Subscrições, a caminho</span><span class="en" lang="en">Subscriptions, on the way</span></h3>
+          <p><span class="pt" lang="pt-MZ">Uma vista para o que é subscrito: conversão de dólar para metical e totais do mês e do ano. Ainda não faz parte da versão 1.2.0.</span><span class="en" lang="en">A view for what you subscribe to: US dollar to metical conversion, plus monthly and yearly totals. Not part of version 1.2.0 yet.</span></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="ecras" aria-labelledby="screens-title" style="padding-top: 0">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pt" lang="pt-MZ">A aplicação</span><span class="en" lang="en">The app</span></p>
+      <h2 id="screens-title"><span class="pt" lang="pt-MZ">Ecrãs reais, com dados de exemplo.</span><span class="en" lang="en">Real screens, with sample data.</span></h2>
+      <p class="lede"><span class="pt" lang="pt-MZ">Os valores que vê — chapa, Credelec, M-Pesa, Shoprite — ilustram o dia a dia. Não são um extrato de ninguém.</span><span class="en" lang="en">The figures you see — a minibus fare, electricity, mobile money, a shop — illustrate an ordinary month. They are not anyone’s real statement.</span></p>
+
+      <article class="showcase">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">Cada lançamento no seu lugar</span><span class="en" lang="en">Every entry in its place</span></h3>
+          <p><span class="pt" lang="pt-MZ">Pesquise, filtre por tipo e percorra o histórico. Transferências e movimentos agendados vivem na mesma lista.</span><span class="en" lang="en">Search, filter by type and walk the history. Transfers and scheduled entries live on the same list.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Pesquisa por texto</span><span class="en" lang="en">Search by text</span></li>
+            <li><span class="pt" lang="pt-MZ">Despesas, receitas e transferências</span><span class="en" lang="en">Expenses, income and transfers</span></li>
+            <li><span class="pt" lang="pt-MZ">Movimentos agendados</span><span class="en" lang="en">Scheduled transactions</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame">
+            <img src="assets/shots/transactions-light.webp" width="1280" height="800" alt="Lista de transações do Tako em tema claro, com pesquisa, filtros e movimentos em meticais. Dados de exemplo." data-alt-pt="Lista de transações do Tako em tema claro, com pesquisa, filtros e movimentos em meticais. Dados de exemplo." data-alt-en="Tako transaction list in the light theme, with search, filters and amounts in meticais. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema claro da aplicação</span><span class="en" lang="en">App in the light theme</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="showcase flip">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">Património em peças</span><span class="en" lang="en">Net worth, in pieces</span></h3>
+          <p><span class="pt" lang="pt-MZ">No exemplo: dinheiro do dia a dia, banco, carteira móvel e poupança. Cada conta mostra o saldo, o movimento do mês e a sua parte no total, em MZN.</span><span class="en" lang="en">In the sample: everyday cash, a bank, mobile money and savings. Each account shows its balance, the month’s movement and its share of the total, in MZN.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Várias contas lado a lado</span><span class="en" lang="en">Several accounts, side by side</span></li>
+            <li><span class="pt" lang="pt-MZ">Transferir entre contas</span><span class="en" lang="en">Transfer between accounts</span></li>
+            <li><span class="pt" lang="pt-MZ">Totais em meticais</span><span class="en" lang="en">Totals in meticais</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame">
+            <img src="assets/shots/accounts-light.webp" width="1280" height="800" alt="Contas do Tako em tema claro: património em MZN, com Principal, BCI, M-Pesa e Poupança. Dados de exemplo." data-alt-pt="Contas do Tako em tema claro: património em MZN, com Principal, BCI, M-Pesa e Poupança. Dados de exemplo." data-alt-en="Tako accounts in the light theme: net worth in MZN, with everyday cash, a bank, mobile money and savings. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema claro da aplicação</span><span class="en" lang="en">App in the light theme</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="showcase">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">Um teto, e um aviso a tempo</span><span class="en" lang="en">A ceiling, and a warning in time</span></h3>
+          <p><span class="pt" lang="pt-MZ">Veja o que está dentro do limite e o que já excedeu. Os alertas e o saldo que transita levam o orçamento de um período ao seguinte.</span><span class="en" lang="en">See what is inside the limit and what has already gone past it. Alerts and rollover carry a budget from one period into the next.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Semanal, mensal e anual</span><span class="en" lang="en">Weekly, monthly and yearly</span></li>
+            <li><span class="pt" lang="pt-MZ">Alerta quando o limite é excedido</span><span class="en" lang="en">An alert when the limit is exceeded</span></li>
+            <li><span class="pt" lang="pt-MZ">O remanescente passa ao período seguinte</span><span class="en" lang="en">What is left rolls into the next period</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame">
+            <img src="assets/shots/budgets-dark.webp" width="1280" height="800" alt="Orçamentos do Tako em tema escuro, com limites em MZN e um orçamento de habitação excedido. Dados de exemplo." data-alt-pt="Orçamentos do Tako em tema escuro, com limites em MZN e um orçamento de habitação excedido. Dados de exemplo." data-alt-en="Tako budgets in the dark theme, with limits in MZN and a housing budget that has gone over. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema escuro da aplicação</span><span class="en" lang="en">App in the dark theme</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="showcase flip">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">Poupar com um destino</span><span class="en" lang="en">Save toward something</span></h3>
+          <p><span class="pt" lang="pt-MZ">Cada objetivo mostra quanto já está junto e quanto falta, em MT. Contribua quando puder — o progresso fica visível.</span><span class="en" lang="en">Each goal shows what is already set aside and what is left, in MT. Add to it when you can — the progress stays visible.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Meta e contribuições</span><span class="en" lang="en">A target, and contributions</span></li>
+            <li><span class="pt" lang="pt-MZ">Progresso à vista</span><span class="en" lang="en">Progress you can see</span></li>
+            <li><span class="pt" lang="pt-MZ">Vários objetivos ao mesmo tempo</span><span class="en" lang="en">Several goals at once</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame">
+            <img src="assets/shots/goals-light.webp" width="1280" height="800" alt="Objetivos de poupança do Tako em tema claro: fundo de emergência e portátil novo, em MZN. Dados de exemplo." data-alt-pt="Objetivos de poupança do Tako em tema claro: fundo de emergência e portátil novo, em MZN. Dados de exemplo." data-alt-en="Tako savings goals in the light theme: an emergency fund and a new laptop, in MZN. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema claro da aplicação</span><span class="en" lang="en">App in the light theme</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="showcase">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">Números que pode levar consigo</span><span class="en" lang="en">Numbers you can take with you</span></h3>
+          <p><span class="pt" lang="pt-MZ">Receitas contra despesas, despesas por categoria, filtro por conta. Exporte em CSV, PDF ou Excel.</span><span class="en" lang="en">Income against expenses, spending by category, filter by account. Export CSV, PDF or Excel.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Mês, ano ou tudo</span><span class="en" lang="en">Month, year, or everything</span></li>
+            <li><span class="pt" lang="pt-MZ">CSV, PDF e Excel</span><span class="en" lang="en">CSV, PDF and Excel</span></li>
+            <li><span class="pt" lang="pt-MZ">Filtro por conta</span><span class="en" lang="en">Filter by account</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame">
+            <img src="assets/shots/reports-dark.webp" width="1280" height="800" alt="Relatórios do Tako em tema escuro: receitas e despesas, despesas por categoria e exportação para CSV e PDF. Dados de exemplo." data-alt-pt="Relatórios do Tako em tema escuro: receitas e despesas, despesas por categoria e exportação para CSV e PDF. Dados de exemplo." data-alt-en="Tako reports in the dark theme: income and expenses, spending by category, and CSV and PDF export. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema escuro da aplicação</span><span class="en" lang="en">App in the dark theme</span></figcaption>
+        </figure>
+      </article>
+
+      <article class="showcase flip">
+        <div class="copy">
+          <h3><span class="pt" lang="pt-MZ">O mesmo Tako, em menos largura</span><span class="en" lang="en">The same Tako, in less width</span></h3>
+          <p><span class="pt" lang="pt-MZ">A aplicação reorganiza-se em ecrãs estreitos. No telemóvel, use-a como PWA no navegador. O botão de descarregamento desta página continua a ser o instalador Windows.</span><span class="en" lang="en">The app rearranges itself on a narrow screen. On a phone, use it as a PWA in the browser. The download button on this page is still the Windows installer.</span></p>
+          <ul>
+            <li><span class="pt" lang="pt-MZ">Saldo, entradas e saídas à mão</span><span class="en" lang="en">Balance, money in and money out, close at hand</span></li>
+            <li><span class="pt" lang="pt-MZ">PWA, a partir do navegador</span><span class="en" lang="en">A PWA, from the browser</span></li>
+            <li><span class="pt" lang="pt-MZ">Instalador de secretária só para Windows</span><span class="en" lang="en">The desktop installer is Windows only</span></li>
+          </ul>
+        </div>
+        <figure>
+          <div class="frame frame-narrow">
+            <img src="assets/shots/dashboard-narrow-dark.webp" width="800" height="600" alt="Painel do Tako numa largura estreita, tema escuro, com saldo em MZN, entradas, saídas e taxa de poupança. Dados de exemplo." data-alt-pt="Painel do Tako numa largura estreita, tema escuro, com saldo em MZN, entradas, saídas e taxa de poupança. Dados de exemplo." data-alt-en="Tako dashboard at a narrow width, dark theme, with the balance in MZN, money in, money out and the savings rate. Sample data." loading="lazy" decoding="async">
+          </div>
+          <figcaption class="shot-note"><span class="pt" lang="pt-MZ">Tema escuro, ecrã estreito</span><span class="en" lang="en">Dark theme, narrow screen</span></figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="galeria" aria-labelledby="gallery-title" style="padding-top: 0">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pt" lang="pt-MZ">Galeria</span><span class="en" lang="en">Gallery</span></p>
+      <h2 id="gallery-title"><span class="pt" lang="pt-MZ">Abra cada ecrã.</span><span class="en" lang="en">Open any screen.</span></h2>
+      <p class="lede"><span class="pt" lang="pt-MZ">O painel muda de tema com esta página. Os outros ecrãs estão na versão clara ou escura que temos para mostrar.</span><span class="en" lang="en">The dashboard follows this page’s theme. The other screens are shown in the light or dark version we have.</span></p>
+      <ul class="gallery">
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img class="for-light" src="assets/shots/dashboard-light.webp" width="1280" height="800" alt="Painel do Tako em tema claro, com saldo, movimentos e objetivos. Dados de exemplo." data-alt-pt="Painel do Tako em tema claro, com saldo, movimentos e objetivos. Dados de exemplo." data-alt-en="Tako dashboard in the light theme, with balance, activity and goals. Sample data." loading="lazy" decoding="async">
+              <img class="for-dark" src="assets/shots/dashboard-dark.webp" width="1280" height="800" alt="Painel do Tako em tema escuro, com saldo, movimentos e objetivos. Dados de exemplo." data-alt-pt="Painel do Tako em tema escuro, com saldo, movimentos e objetivos. Dados de exemplo." data-alt-en="Tako dashboard in the dark theme, with balance, activity and goals. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Painel</span><span class="en" lang="en">Dashboard</span></span>
+              <span class="cap-note"><span class="only-light"><span class="pt" lang="pt-MZ">Tema claro</span><span class="en" lang="en">Light theme</span></span><span class="only-dark"><span class="pt" lang="pt-MZ">Tema escuro</span><span class="en" lang="en">Dark theme</span></span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/transactions-light.webp" width="1280" height="800" alt="Transações do Tako em tema claro. Dados de exemplo." data-alt-pt="Transações do Tako em tema claro. Dados de exemplo." data-alt-en="Tako transactions in the light theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Transações</span><span class="en" lang="en">Transactions</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema claro</span><span class="en" lang="en">Light theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/accounts-light.webp" width="1280" height="800" alt="Contas do Tako em tema claro. Dados de exemplo." data-alt-pt="Contas do Tako em tema claro. Dados de exemplo." data-alt-en="Tako accounts in the light theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Contas</span><span class="en" lang="en">Accounts</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema claro</span><span class="en" lang="en">Light theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/budgets-dark.webp" width="1280" height="800" alt="Orçamentos do Tako em tema escuro. Dados de exemplo." data-alt-pt="Orçamentos do Tako em tema escuro. Dados de exemplo." data-alt-en="Tako budgets in the dark theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Orçamentos</span><span class="en" lang="en">Budgets</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema escuro</span><span class="en" lang="en">Dark theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/goals-light.webp" width="1280" height="800" alt="Objetivos do Tako em tema claro. Dados de exemplo." data-alt-pt="Objetivos do Tako em tema claro. Dados de exemplo." data-alt-en="Tako goals in the light theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Objetivos</span><span class="en" lang="en">Goals</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema claro</span><span class="en" lang="en">Light theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/reports-dark.webp" width="1280" height="800" alt="Relatórios do Tako em tema escuro. Dados de exemplo." data-alt-pt="Relatórios do Tako em tema escuro. Dados de exemplo." data-alt-en="Tako reports in the dark theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Relatórios</span><span class="en" lang="en">Reports</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema escuro</span><span class="en" lang="en">Dark theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <button type="button" class="shot-btn">
+              <img src="assets/shots/dashboard-narrow-dark.webp" width="800" height="600" alt="Painel do Tako em ecrã estreito, tema escuro. Dados de exemplo." data-alt-pt="Painel do Tako em ecrã estreito, tema escuro. Dados de exemplo." data-alt-en="Tako dashboard on a narrow screen, dark theme. Sample data." loading="lazy" decoding="async">
+              <span class="sr-only"><span class="pt" lang="pt-MZ">Ampliar</span><span class="en" lang="en">Enlarge</span></span>
+            </button>
+            <figcaption>
+              <span class="cap-name"><span class="pt" lang="pt-MZ">Ecrã estreito</span><span class="en" lang="en">Narrow screen</span></span>
+              <span class="cap-note"><span class="pt" lang="pt-MZ">Tema escuro</span><span class="en" lang="en">Dark theme</span></span>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="privacidade" aria-labelledby="privacy-title">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pt" lang="pt-MZ">Privacidade</span><span class="en" lang="en">Privacy</span></p>
+      <h2 id="privacy-title"><span class="pt" lang="pt-MZ">Os seus números ficam consigo.</span><span class="en" lang="en">Your figures stay with you.</span></h2>
+      <p class="lede"><span class="pt" lang="pt-MZ">O Tako trabalha no seu dispositivo. A nuvem só entra se a pedir, e entra cifrada.</span><span class="en" lang="en">Tako works on your device. The cloud only comes in if you ask, and it comes in encrypted.</span></p>
+      <ul class="privacy-grid">
+        <li class="card">
+          <h3>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            <span class="pt" lang="pt-MZ">Dados locais</span><span class="en" lang="en">Local data</span>
+          </h3>
+          <p><span class="pt" lang="pt-MZ">Por omissão, os dados ficam neste dispositivo. O Tako indica quando está em modo só local.</span><span class="en" lang="en">By default, data stays on this device. Tako tells you when it is in local-only mode.</span></p>
+        </li>
+        <li class="card">
+          <h3>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .4-8 6 6 0 0 0-11.5-1.6A3.8 3.8 0 0 0 7 18z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+            <span class="pt" lang="pt-MZ">Google Drive cifrado</span><span class="en" lang="en">Encrypted Google Drive</span>
+          </h3>
+          <p><span class="pt" lang="pt-MZ">Se quiser os mesmos dados noutro computador, a sincronização com o Google Drive vai cifrada.</span><span class="en" lang="en">If you want the same data on another computer, Google Drive sync is encrypted.</span></p>
+        </li>
+        <li class="card">
+          <h3>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3" y="5" width="12" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/><rect x="9" y="9" width="12" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"/></svg>
+            <span class="pt" lang="pt-MZ">Entre separadores</span><span class="en" lang="en">Across tabs</span>
+          </h3>
+          <p><span class="pt" lang="pt-MZ">Duas janelas abertas não se afastam. As alterações sincronizam entre separadores.</span><span class="en" lang="en">Two open windows do not drift apart. Changes sync between tabs.</span></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="download-band section" id="descarregar" aria-labelledby="download-title">
+    <div class="wrap download-grid">
+      <div>
+        <p class="eyebrow"><span class="pt" lang="pt-MZ">Windows · 64 bits</span><span class="en" lang="en">Windows · 64-bit</span></p>
+        <h2 id="download-title"><span class="pt" lang="pt-MZ">Instalar o Tako 1.2.0</span><span class="en" lang="en">Install Tako 1.2.0</span></h2>
+        <p class="lede"><span class="pt" lang="pt-MZ">A aplicação de secretária para Windows, feita com Electron. Um instalador.</span><span class="en" lang="en">The Windows desktop app, built with Electron. One installer.</span></p>
+        <a class="btn btn-primary" href="/downloads/Tako-1.2.0-x64-Setup.exe">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="pt" lang="pt-MZ">Descarregar para Windows</span><span class="en" lang="en">Download for Windows</span>
+        </a>
+        <div><code class="filename">Tako-1.2.0-x64-Setup.exe</code></div>
+        <p class="fine"><span class="pt" lang="pt-MZ">O instalador é para Windows de 64 bits. No telemóvel, ou noutro sistema, o Tako também corre como PWA no navegador. Esta página não indica um preço.</span><span class="en" lang="en">The installer is for 64-bit Windows. On a phone, or on another system, Tako also runs as a PWA in the browser. This page does not list a price.</span></p>
+      </div>
+      <div>
+        <ul class="download-list">
+          <li><span class="pt" lang="pt-MZ">Versão 1.2.0</span><span class="en" lang="en">Version 1.2.0</span></li>
+          <li><span class="pt" lang="pt-MZ">Aplicação Electron para Windows de 64 bits</span><span class="en" lang="en">Electron app for 64-bit Windows</span></li>
+          <li><span class="pt" lang="pt-MZ">Tema claro e escuro, português e inglês</span><span class="en" lang="en">Light and dark themes, Portuguese and English</span></li>
+          <li><span class="pt" lang="pt-MZ">Dados no dispositivo, com sincronização cifrada se a ativar</span><span class="en" lang="en">Data on the device, with encrypted sync if you turn it on</span></li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn-ghost" href="#privacidade"><span class="pt" lang="pt-MZ">Como ficam os dados</span><span class="en" lang="en">How the data is kept</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-title"><span class="pt" lang="pt-MZ">Perguntas frequentes</span><span class="en" lang="en">Questions, answered</span></h2>
+      <div class="faq">
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">Onde ficam os meus dados?</span><span class="en" lang="en">Where does my data live?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">Por omissão, neste dispositivo. O Tako mostra quando está só local. A sincronização com o Google Drive é opcional e cifrada — serve para ter os mesmos dados noutro computador.</span><span class="en" lang="en">On this device, by default. Tako shows when it is local only. Google Drive sync is optional and encrypted — it is there so you can keep the same data on another computer.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">O que sincroniza entre separadores?</span><span class="en" lang="en">What syncs between tabs?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">As alterações feitas numa janela passam para as outras janelas abertas do Tako, para as duas não divergirem.</span><span class="en" lang="en">A change made in one window is carried to the other open Tako windows, so the two do not drift apart.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">Posso usar o Tako no telemóvel?</span><span class="en" lang="en">Can I use Tako on a phone?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">Sim, como PWA: a partir do navegador, e o ecrã adapta-se a larguras menores. O botão de descarregamento desta página é o instalador para Windows, não uma aplicação de loja móvel.</span><span class="en" lang="en">Yes, as a PWA: from the browser, and the screen adapts to a narrower width. The download button on this page is the Windows installer, not a mobile-store app.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">O que inclui a versão 1.2.0 para Windows?</span><span class="en" lang="en">What is in the Windows 1.2.0 release?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">A aplicação de secretária (Electron), num instalador de 64 bits: Tako-1.2.0-x64-Setup.exe. Contas, transações — incluindo transferências e agendadas —, categorias com regras e modelos, orçamentos com alertas e saldo que transita, objetivos, contas a pagar, relatórios em CSV, PDF e Excel, várias moedas, português e inglês, e tema claro e escuro.</span><span class="en" lang="en">The desktop app (Electron), in a 64-bit installer: Tako-1.2.0-x64-Setup.exe. Accounts, transactions — including transfers and scheduled ones — categories with rules and templates, budgets with alerts and rollover, goals, bills, CSV, PDF and Excel reports, multiple currencies, Portuguese and English, and light and dark themes.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">As subscrições já estão disponíveis?</span><span class="en" lang="en">Are subscriptions available yet?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">Ainda não. Subscrições — acompanhar serviços, converter USD para metical e ver totais mensais e anuais — é uma funcionalidade a caminho. Não faz parte da versão 1.2.0.</span><span class="en" lang="en">Not yet. Subscriptions — tracking services, converting USD to metical and seeing monthly and yearly totals — are on the way. They are not part of version 1.2.0.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">Em que línguas e moedas funciona?</span><span class="en" lang="en">Which languages and currencies?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">Em português e inglês. Suporta várias moedas. Os exemplos deste site estão em meticais (MZN), também escritos como MT.</span><span class="en" lang="en">Portuguese and English. It supports multiple currencies. The examples on this site are in meticais (MZN), also written as MT.</span></p>
+        </details>
+        <details class="faq-item">
+          <summary>
+            <span class="pt" lang="pt-MZ">Esta página tem um preço?</span><span class="en" lang="en">Does this page list a price?</span>
+            <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+          </summary>
+          <p class="answer"><span class="pt" lang="pt-MZ">Não. O Tako 1.2.0 está disponível para descarregar para Windows, e esta página não publica um preço.</span><span class="en" lang="en">No. Tako 1.2.0 is available to download for Windows, and this page does not publish a price.</span></p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="assets/icon-64.png" width="28" height="28" alt="">
+      <span>Tako</span>
+    </div>
+    <p class="footer-meta">
+      <span class="pt" lang="pt-MZ">Feito por Daniel Marcos</span><span class="en" lang="en">Built by Daniel Marcos</span>
+      · <a href="https://danielpro.dev">danielpro.dev</a>
+    </p>
+    <p class="footer-meta"><a href="#topo"><span class="pt" lang="pt-MZ">Voltar ao topo</span><span class="en" lang="en">Back to top</span></a> · © 2026</p>
+  </div>
+</footer>
+
+<dialog id="lightbox" aria-labelledby="lightbox-title">
+  <div class="lightbox-top">
+    <p id="lightbox-title"></p>
+    <button type="button" class="btn btn-ghost" id="lightbox-close">
+      <span class="pt" lang="pt-MZ">Fechar</span><span class="en" lang="en">Close</span>
+    </button>
+  </div>
+  <img id="lightbox-img" alt="">
+</dialog>
+<script src="js/main.js"></script>
+</body>
 </html>
