@@ -856,6 +856,16 @@ dialog img { display: block; width: 100%; height: auto; }
 
   /* Pull the hero under the in-flow header so the first screen is one section. */
   main > section.hero { margin-top: calc(var(--header-offset) * -1); }
+
+  /* Section links still align to the viewport. Nested targets, such as
+     #subscricoes, need their own clearance under the sticky header.
+     The card is also a snap point so proximity does not skip it for the
+     next section, which starts just below it. */
+  main > section { scroll-margin-top: 0; }
+  main > section [id] {
+    scroll-margin-top: calc(var(--header-offset) + 16px);
+  }
+  #subscricoes { scroll-snap-align: start; }
 }
 
 @media (max-width: 1024px) and (prefers-reduced-motion: reduce) {
